@@ -116,7 +116,7 @@ char CheckWin(char board[ROW][COL], int row, int col)
 	{
 		for (j = 0; j < col; j++)
 		{
-			if (board[i][j] == board[i][j + 1] && board[i][j + 1] == board[i][j + 2])
+			if (board[i][j] == board[i][j + 1] && board[i][j + 1] == board[i][j + 2] && board[i][j] != ' ')
 			{
 				return board[i][j];
 			}
@@ -127,7 +127,7 @@ char CheckWin(char board[ROW][COL], int row, int col)
 	{
 		for (j = 0; j < col; j++)
 		{
-			if (board[i][j] == board[i + 1][j] && board[i + 1][j] == board[i + 2][j])
+			if (board[i][j] == board[i + 1][j] && board[i + 1][j] == board[i + 2][j] && board[i][j] != ' ')
 			{
 				return board[i][j];
 			}
@@ -140,7 +140,7 @@ char CheckWin(char board[ROW][COL], int row, int col)
 		{
 			if (i == j)
 			{
-				if (board[i][j] == board[i + 1][j + 1] && board[i + 1][j + 1] == board[i + 2][j + 2])
+				if (board[i][j] == board[i + 1][j + 1] && board[i + 1][j + 1] == board[i + 2][j + 2] && board[i][j] != ' ')
 				{
 					return board[i][j];
 				}
@@ -152,7 +152,7 @@ char CheckWin(char board[ROW][COL], int row, int col)
 	{
 		for (j = col-1; j >=0 ; j--)
 		{
-			if (board[i][j] == board[i + 1][j - 1] && board[i + 1][j - 1] == board[i + 2][j - 2])
+			if (board[i][j] == board[i + 1][j - 1] && board[i + 1][j - 1] == board[i + 2][j - 2] && board[i][j] != ' ')
 			{
 				return board[i][j];
 
