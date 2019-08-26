@@ -134,29 +134,52 @@ char CheckWin(char board[ROW][COL], int row, int col)
 		}
 	}
 	//≈–∂œ“ªﬁ‡
-	for (i = 0; i < row; i++)
+	for (i = 0; i < row-2; i++)
 	{
-		for (j = 0; j < col; j++)
+		for (j = 0; j < col-2; j++)
 		{
-			if (i == j)
+			if (board[i][j] == board[i + 1][j + 1] && board[i + 1][j + 1] == board[i + 2][j + 2] && board[i][j] != ' ')
 			{
-				if (board[i][j] == board[i + 1][j + 1] && board[i + 1][j + 1] == board[i + 2][j + 2] && board[i][j] != ' ')
-				{
-					return board[i][j];
-				}
+				return board[i][j];
 			}
+			i++;		
+		}
+	}
+	for (j = 1; j < col - 2; j++)
+	{
+		for (i = 0; i < row - 2; i++)
+		{
+			if (board[i][j] == board[i + 1][j + 1] && board[i + 1][j + 1] == board[i + 2][j + 2] && board[i][j] != ' ')
+			{
+				return board[i][j];
+			}
+			i++;
 		}
 	}
 	//≈–∂œ“ª∆≥
-	for (i = 0; i < row; i++)
+	for (i = 0; i < row-2; i++)
 	{
-		for (j = col-1; j >=0 ; j--)
+		for (j = col-1; j >=2 ; j--)
+		{
+			if (board[i][j] == board[i + 1][j - 1] && board[i + 1][j - 1] == board[i + 2][j - 2] && board[i][j] != ' ')
+				{
+					return board[i][j];
+
+				}
+			i++;
+			
+		}
+	}
+	for (j = col - 2; j >= 2; j--)
+	{
+		for (i = 0; i < row - 2; i++)
 		{
 			if (board[i][j] == board[i + 1][j - 1] && board[i + 1][j - 1] == board[i + 2][j - 2] && board[i][j] != ' ')
 			{
 				return board[i][j];
 
 			}
+			j--;
 		}
 	}
 	if (IsFull(board, row, col) == 1)

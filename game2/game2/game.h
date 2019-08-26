@@ -4,7 +4,7 @@
 #define COL 9
 #define ROWS ROW+2
 #define COLS COL+2
-#define Lcount 78
+#define Lcount 10
 
 #include<stdio.h>
 #include<stdlib.h>
