@@ -27,19 +27,19 @@
 //{
 //	assert(dest && src);
 //	char* ret = dest;
-//	//while (*src != '\0')
-//	//{
-//	//	*dest = *src;
-//	//	dest++;
-//	//	src++;
-//	//}
-//	//*dest = *src;
+//	while (*src != '\0')
+//	{
+//		*dest = *src;
+//		dest++;
+//		src++;
+//	}
+//	*dest = *src;
 //
-//	//while (*dest = *src)
-//	//{
-//	//	dest++;
-//	//	src++;
-//	//}
+//	while (*dest = *src)
+//	{
+//		dest++;
+//		src++;
+//	}
 //
 //	while (*dest++ = *src++)
 //	{
@@ -108,7 +108,7 @@
 //char* my_strstr(const char*s1, const char*s2)
 //{
 //	const char*p1 = s1;
-//    const char*p2 = s2;
+//  const char*p2 = s2;
 //	const char*start = s1;
 //	assert(s1 && s2);
 //	if (*s2 == '\0')
