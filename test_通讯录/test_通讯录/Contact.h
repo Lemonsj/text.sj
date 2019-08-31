@@ -4,6 +4,7 @@
 #include<assert.h>
 #include<string.h>
 #include<stdlib.h>
+#include<errno.h>
 
 #define Name_Max 20
 #define Addr_Max 20
@@ -11,6 +12,7 @@
 #define Phone_Max 20
 
 #define Max 1000
+#define DEFAULT_SZ 3
 
 typedef struct PeoInfo
 {
@@ -33,14 +35,18 @@ enum option
 
 typedef struct Contact
 {
-	struct PeoInfo data[Max];
+	PeoInfo* data;
 	int sz;
+	int capacity;//ÈÝÁ¿
 }Contact;
 
-
+void InitContact(Contact* pcon);
 void AddContact(Contact* pcon);
 void ShowContact(Contact* pcon);
 void DelContact(Contact* pcon);
 void SearchContact(Contact* pcon);
 void ModifyContact(Contact* pcon);
 void SortContact(Contact* pcon);
+void DestroyContact(Contact* pcon);
+void SaveContact(Contact* pcon);
+void LoadContact(Contact* pcon);

@@ -16,6 +16,7 @@ void test()
 {
 	int input = 0;
 	struct Contact con = { 0 };
+	InitContact(&con);
 	do
 	{
 		menu();
@@ -42,6 +43,8 @@ void test()
 			SortContact(&con);
 			break;
 		default:
+			SaveContact(&con);
+			DestroyContact(&con);
 			printf("Ñ¡Ôñ´íÎó!\n");
 			break;
 		}

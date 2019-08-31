@@ -2,28 +2,105 @@
 
 #include "Contact.h"
 
-void AddContact(Contact*  pcon)
+
+void CheckCapacity(Contact* pcon)
 {
-	if (pcon->sz < Max)
+	if (pcon->sz == pcon->capacity)
 	{
-		printf("请输入姓名：>");
-		scanf("%s", pcon->data[pcon->sz].name);
-		printf("请输入年龄：>");
-		scanf("%d", &pcon->data[pcon->sz].age);
-		printf("请输入姓别：>");
-		scanf("%s", pcon->data[pcon->sz].sex);
-		printf("请输入电话：>");
-		scanf("%s", pcon->data[pcon->sz].phone);
-		printf("请输入地址：>");
-		scanf("%s", pcon->data[pcon->sz].addr); 
-		pcon->sz++;
-	}
-	else
-	{
-		printf("通讯录已满，无法添加\n");
+		PeoInfo* ptr = realloc(pcon->data, (pcon->capacity+2)*sizeof(PeoInfo));
+		if (ptr != NULL)
+		{
+			pcon->data = ptr;
+			pcon->capacity += 2;
+			printf("增容成功\n");
+		}
 	}
 }
+void LoadContact(Contact* pcon)
+{
+	PeoInfo tmp = { 0 };
+	FILE* pfRead = fopen("Contact.dat", "rb");
+	if (pfRead == NULL)
+	{
+		printf("加载信息：打开文件失败\n");
+		return;
+	}
+	//加载信息
+	while (fread(&tmp, sizeof(PeoInfo), 1, pfRead))
+	{
+		CheckCapacity(pcon);
+		pcon->data[pcon->sz] = tmp;
+		pcon->sz++;
+	}
 
+	fclose(pfRead);
+	pfRead = NULL;
+}
+void InitContact(Contact*  pcon)
+{
+	assert(pcon);
+	pcon->sz = 0;
+	//pcon->data = (PeoInfo *)calloc(DEFAULT_SZ, sizeof(PeoInfo));
+	pcon->data = (PeoInfo *)calloc(DEFAULT_SZ, sizeof(PeoInfo));
+	if (pcon->data == NULL)
+	{
+		printf("%s\n", strerror);
+		return;
+	}
+	pcon->capacity = DEFAULT_SZ;
+	//加载文件
+	LoadContact(pcon);
+}
+void DestroyContact(Contact* pcon)
+{
+	free(pcon->data);
+	pcon->data = NULL;
+	pcon->capacity = 0;
+	pcon->sz = 0;
+}
+//void AddContact(Contact*  pcon)
+//{
+//	if (pcon->sz < Max)
+//	{
+//		printf("请输入姓名：>");
+//		scanf("%s", pcon->data[pcon->sz].name);
+//		printf("请输入年龄：>");
+//		scanf("%d", &pcon->data[pcon->sz].age);
+//		printf("请输入姓别：>");
+//		scanf("%s", pcon->data[pcon->sz].sex);
+//		printf("请输入电话：>");
+//		scanf("%s", pcon->data[pcon->sz].phone);
+//		printf("请输入地址：>");
+//		scanf("%s", pcon->data[pcon->sz].addr); 
+//		pcon->sz++;
+//	}
+//	else
+//	{
+//		printf("通讯录已满，无法添加\n");
+//	}
+//}
+
+void AddContact(Contact* pcon)
+{
+	assert(pcon);
+
+	CheckCapacity(pcon);
+
+	//录入信息
+	printf("请输入名字:>");
+	scanf("%s", pcon->data[pcon->sz].name);
+	printf("请输入年龄:>");
+	scanf("%d", &(pcon->data[pcon->sz].age));
+	printf("请输入性别:>");
+	scanf("%s", pcon->data[pcon->sz].sex);
+	printf("请输入电话:>");
+	scanf("%s", pcon->data[pcon->sz].phone);
+	printf("请输入地址:>");
+	scanf("%s", pcon->data[pcon->sz].addr);
+
+	pcon->sz++;
+	printf("增加成功\n");
+}
 void ShowContact(Contact*  pcon)
 {
 	int i = 0;
@@ -123,4 +200,23 @@ int cmp_by_name(const void* e1, const void* e2)
 void SortContact(Contact* pcon)
 {
 	qsort(pcon->data, pcon->sz, sizeof(PeoInfo), cmp_by_name);
+}
+void SaveContact(Contact* pcon)
+{
+	int i = 0;
+	FILE* pfWrite = fopen("contact.dat", "wb");
+	if (pfWrite == NULL)
+	{
+		printf("保存信息：打开文件失败\n");
+		return;
+	}
+	//保存信息
+	for (i = 0; i<pcon->sz; i++)
+	{
+		fwrite(pcon->data + i, sizeof(PeoInfo), 1, pfWrite);
+	}
+
+	//关闭文件
+	fclose(pfWrite);
+	pfWrite = NULL;
 }
